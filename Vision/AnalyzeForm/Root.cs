@@ -3,9 +3,8 @@
 
 namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
 {
-    public class KeyValuePair
+    public class Root
     {
-        public string Key { get; set; }
-        public Field Value { get; set; }
+        public Fields Fields { get; set; }
     }
 }

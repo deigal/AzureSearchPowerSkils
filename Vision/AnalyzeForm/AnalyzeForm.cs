@@ -79,9 +79,9 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
                             //List<Page> pages = result.SelectToken("analyzeResult.pageResults").ToObject<List<Page>>();
                             List<Document> documents = result.SelectToken("analyzeResult.documents").ToObject<List<Document>>();
 
-                            string str = result.SelectToken("analyzeResult.documents[0].fields").ToString();
-                            Field test = result.SelectToken("analyzeResult.documents[0].fields").ToObject<Field>();
-                            KeyValuePair kvpa = result.SelectToken("analyzeResult.documents[0].fields").ToObject<KeyValuePair>();
+                            //string str = result.SelectToken("analyzeResult.documents[0].fields").ToString();
+                            Fields test = result.SelectToken("analyzeResult.documents[0].fields").ToObject<Fields>();
+                            //Root root = result.SelectToken("analyzeResult.documents[0].fields").ToObject<Root>();
                             foreach (KeyValuePair<string, string> kvp in fieldMappings)
                             {
                                 string value = GetField(documents, kvp.Key);
@@ -113,7 +113,7 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
         private static string GetField(IList<Document> documents, string fieldName)
         //private static string GetField(Document documents, string fieldName)
         {
-            //IEnumerable<string> value = documents
+            IEnumerable<string> value = documents
                 //.SelectMany(p => p.KeyValuePairs)
               //  .SelectMany(p => p.Fields);
                 //.Where(kvp => string.Equals(kvp.Key.Text.Trim(), fieldName, StringComparison.CurrentCultureIgnoreCase))

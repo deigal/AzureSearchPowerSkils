@@ -11,7 +11,7 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
 
         public BoundingRegion[] BoundingRegions { get; set; }
 
-        public KeyValuePair[] Kvps{ get; set; }
+        public Root Root { get; set; }
 
         public double Confidence { get; set; }
 
