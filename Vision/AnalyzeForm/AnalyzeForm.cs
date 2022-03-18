@@ -76,10 +76,13 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
                         }
                         if (status == "succeeded")
                         {
-                            List<Page> pages = result.SelectToken("analyzeResult.pageResults").ToObject<List<Page>>();
+                            //List<Page> pages = result.SelectToken("analyzeResult.pageResults").ToObject<List<Page>>();
+                            List<Document> documents = result.SelectToken("analyzeResult.documents").ToObject<List<Document>>();
+                            
+                            Field field = result.SelectToken("analyzeResult.documents[0].fields").ToObject<Field>();
                             foreach (KeyValuePair<string, string> kvp in fieldMappings)
                             {
-                                string value = GetField(pages, kvp.Key);
+                                string value = GetField(documents, kvp.Key);
                                 if (!string.IsNullOrWhiteSpace(value))
                                 {
                                     outRecord.Data[kvp.Value] = value;
@@ -105,13 +108,19 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
         /// <param name="response">the responsed from the forms recognizer service.</param>
         /// <param name="fieldName">The field to search for</param>
         /// <returns></returns>
-        private static string GetField(IList<Page> pages, string fieldName)
+        private static string GetField(IList<Document> documents, string fieldName)
+        //private static string GetField(Document documents, string fieldName)
         {
-            IEnumerable<string> value = pages
-                .SelectMany(p => p.KeyValuePairs)
-                .Where(kvp => string.Equals(kvp.Key.Text.Trim(), fieldName, StringComparison.CurrentCultureIgnoreCase))
-                .Select(kvp => kvp.Value.Text);
-            return value == null ? null : string.Join(" ", value);
+            //IEnumerable<string> value = documents
+                //.SelectMany(p => p.KeyValuePairs)
+              //  .SelectMany(p => p.Fields);
+                //.Where(kvp => string.Equals(kvp.Key.Text.Trim(), fieldName, StringComparison.CurrentCultureIgnoreCase))
+                //.Where(kvp => string.Equals(kvp.Key.Text.Trim(), fieldName, StringComparison.CurrentCultureIgnoreCase))
+                //.Select(kvp => kvp.Value.Text);
+            //return value == null ? null : string.Join(" ", value);
+            Console.WriteLine("Hello");
+            return null;
+            //return value == null ? null : string.Join(" ", value);
         }
 
         /// <summary>
@@ -122,7 +131,8 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
         /// <returns>The job id that can be used in analyzeResults.</returns>
         private static async Task<string> GetJobId(string endpointUrl, string formUrl, string modelId, string apiKey)
         {
-            string uri = endpointUrl + "/formrecognizer/v2.0-preview/custom/models/" + Uri.EscapeDataString(modelId) + "/analyze";
+            //string uri = endpointUrl + "/formrecognizer/v2.0-preview/custom/models/" + Uri.EscapeDataString(modelId) + "/analyze";
+            string uri = endpointUrl + "/formrecognizer/documentModels/" + Uri.EscapeDataString(modelId) + ":analyze?api-version=2022-01-30-preview";
 
             using (var client = new HttpClient())
             {
@@ -132,7 +142,7 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
                     RequestUri = new Uri(uri),
                     Content = new StringContent(JsonConvert.SerializeObject(new
                     {
-                        source = formUrl
+                        urlSource = formUrl
                     })),
                 })
                 {
