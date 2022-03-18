@@ -7,19 +7,19 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
 {
     public class Field
     {
-        [JsonProperty(PropertyName = "field")]
-
         public string Type { get; set; }
         
         public string ValueString { get; set; }
-        public int ValueNumber { get; set; }
 
-        public string content { get; set; }
+        public int valueNumber { get; set; }
 
-        public BoundingRegion boundingRegion { get; set; }
+        public string Content { get; set; }
 
+        public BoundingRegion[] BoundingRegions { get; set; }
+        
         public double Confidence { get; set; }
 
+        public Span[] spans { get; set; }
 
     }
 }

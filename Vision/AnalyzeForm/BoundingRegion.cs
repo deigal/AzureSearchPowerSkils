@@ -9,7 +9,5 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
 
         public double[] BoundingBox { get; set; }
 
-        public int Confidence { get; set; }
-
     }
 }

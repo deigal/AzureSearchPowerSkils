@@ -9,13 +9,13 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
     {
         public string DocType { get; set; }
 
-        public BoundingRegion[] BoundinRegions { get; set; }
+        public BoundingRegion[] BoundingRegions { get; set; }
 
-        public Field Field { get; set; }
+        public KeyValuePair Root{ get; set; }
 
         public double Confidence { get; set; }
 
-        public Span[] span { get; set; }
+        public Span[] Spans { get; set; }
 
     }
 }

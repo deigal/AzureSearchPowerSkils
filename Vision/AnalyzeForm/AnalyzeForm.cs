@@ -78,8 +78,10 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
                         {
                             //List<Page> pages = result.SelectToken("analyzeResult.pageResults").ToObject<List<Page>>();
                             List<Document> documents = result.SelectToken("analyzeResult.documents").ToObject<List<Document>>();
-                            
-                            Field field = result.SelectToken("analyzeResult.documents[0].fields").ToObject<Field>();
+
+                            string str = result.SelectToken("analyzeResult.documents[0].fields").ToString();
+                            Field test = result.SelectToken("analyzeResult.documents[0].fields").ToObject<Field>();
+                            KeyValuePair kvpa = result.SelectToken("analyzeResult.documents[0].fields").ToObject<KeyValuePair>();
                             foreach (KeyValuePair<string, string> kvp in fieldMappings)
                             {
                                 string value = GetField(documents, kvp.Key);

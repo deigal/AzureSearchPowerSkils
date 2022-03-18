@@ -5,8 +5,7 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
 {
     public class KeyValuePair
     {
-        public BoundedElement Key { get; set; }
-        public BoundedElement Value { get; set; }
-        public double Confidence { get; set; }
+        public string Key { get; set; }
+        public Field Value { get; set; }
     }
 }
