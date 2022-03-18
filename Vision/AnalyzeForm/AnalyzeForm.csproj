@@ -5,6 +5,9 @@
     <RootNamespace>AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Fields.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="field-mappings.json" />
   </ItemGroup>
   <ItemGroup>

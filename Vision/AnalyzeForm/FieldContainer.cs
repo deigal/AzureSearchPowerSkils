@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
 {
-    public class LotNumber
+    public class FieldContainer
     {
         public string type { get; set; }
         public string valueString { get; set; }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See LICENSE file in the project root for full license information.  
 
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
 {
@@ -11,7 +12,7 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
 
         public BoundingRegion[] BoundingRegions { get; set; }
 
-        public Root Root { get; set; }
+        public Dictionary<string, FieldContainer> Fields { get; set; }
 
         public double Confidence { get; set; }
 

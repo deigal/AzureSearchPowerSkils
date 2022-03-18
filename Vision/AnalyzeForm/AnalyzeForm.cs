@@ -76,12 +76,7 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
                         }
                         if (status == "succeeded")
                         {
-                            //List<Page> pages = result.SelectToken("analyzeResult.pageResults").ToObject<List<Page>>();
                             List<Document> documents = result.SelectToken("analyzeResult.documents").ToObject<List<Document>>();
-
-                            //string str = result.SelectToken("analyzeResult.documents[0].fields").ToString();
-                            Fields test = result.SelectToken("analyzeResult.documents[0].fields").ToObject<Fields>();
-                            //Root root = result.SelectToken("analyzeResult.documents[0].fields").ToObject<Root>();
                             foreach (KeyValuePair<string, string> kvp in fieldMappings)
                             {
                                 string value = GetField(documents, kvp.Key);
@@ -111,18 +106,16 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
         /// <param name="fieldName">The field to search for</param>
         /// <returns></returns>
         private static string GetField(IList<Document> documents, string fieldName)
-        //private static string GetField(Document documents, string fieldName)
         {
             IEnumerable<string> value = documents
-                //.SelectMany(p => p.KeyValuePairs)
-              //  .SelectMany(p => p.Fields);
-                //.Where(kvp => string.Equals(kvp.Key.Text.Trim(), fieldName, StringComparison.CurrentCultureIgnoreCase))
-                //.Where(kvp => string.Equals(kvp.Key.Text.Trim(), fieldName, StringComparison.CurrentCultureIgnoreCase))
-                //.Select(kvp => kvp.Value.Text);
-            //return value == null ? null : string.Join(" ", value);
-            Console.WriteLine("Hello");
-            return null;
-            //return value == null ? null : string.Join(" ", value);
+                .SelectMany(d => d.Fields)
+                //.Where(Fields => string.Equals(Fields.Key.Text.Trim(), fieldName, StringComparison.CurrentCultureIgnoreCase))
+                .Where(Fields => string.Equals(Fields.Key.Trim(), fieldName, StringComparison.CurrentCultureIgnoreCase))
+
+                .Select(Fields => Fields.Value.content);
+
+            return value == null ? null : string.Join(" ", value);
+            //return "Hello";
         }
 
         /// <summary>
