@@ -28,6 +28,7 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
         private static readonly string retryDelaySetting = "FORMS_RECOGNIZER_RETRY_DELAY";
         private static readonly string maxAttemptsSetting = "FORMS_RECOGNIZER_MAX_ATTEMPTS";
 
+
         [FunctionName("analyze-form")]
         public static async Task<IActionResult> RunAnalyzeForm(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
@@ -43,11 +44,14 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
                 return new BadRequestObjectResult($"{skillName} - Invalid request record array.");
             }
 
+            
             string formsRecognizerEndpointUrl = Environment.GetEnvironmentVariable(formsRecognizerApiEndpointSetting, EnvironmentVariableTarget.Process).TrimEnd('/');
             string formsRecognizerApiKey = Environment.GetEnvironmentVariable(formsRecognizerApiKeySetting, EnvironmentVariableTarget.Process);
             string modelId = Environment.GetEnvironmentVariable(modelIdSetting, EnvironmentVariableTarget.Process);
             int retryDelay = int.TryParse(Environment.GetEnvironmentVariable(retryDelaySetting, EnvironmentVariableTarget.Process), out int parsedRetryDelay) ? parsedRetryDelay : 1000;
             int maxAttempts = int.TryParse(Environment.GetEnvironmentVariable(maxAttemptsSetting, EnvironmentVariableTarget.Process), out int parsedMaxAttempts) ? parsedMaxAttempts : 100;
+
+            log.LogInformation("Read environment variables ", formsRecognizerEndpointUrl);
 
             Dictionary<string, string> fieldMappings = JsonConvert.DeserializeObject<Dictionary<string, string>>(
                 File.ReadAllText($"{executionContext.FunctionAppDirectory}\\field-mappings.json"));
