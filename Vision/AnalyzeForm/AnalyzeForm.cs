@@ -62,6 +62,8 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
                     var formSasToken = inRecord.Data["formSasToken"] as string;
                     string formUri = WebApiSkillHelpers.CombineSasTokenWithUri(formUrl, formSasToken);
 
+                    log.LogInformation("form Uri " + formUri);
+
                     // Create the job
                     string jobId = await GetJobId(formsRecognizerEndpointUrl, formUri, modelId, formsRecognizerApiKey);
 
@@ -87,8 +89,10 @@ namespace AzureCognitiveSearch.PowerSkills.Vision.AnalyzeForm
                                 if (!string.IsNullOrWhiteSpace(value))
                                 {
                                     outRecord.Data[kvp.Value] = value;
+                                    log.LogInformation("Output " + value);
                                 }
                             }
+                            
                             return outRecord;
                         }
                         await Task.Delay(retryDelay);
